@@ -1,4 +1,9 @@
 import express from "express";
+import z from "zod";
+import { connectToDb } from "./src/db/dbConection.js";
+import { env } from "./src/utils/env.js";
+
+const dbDriver = await connectToDb(env.MONGO_URI);
 
 interface Posts {
 	id: number;
@@ -6,7 +11,6 @@ interface Posts {
 	image: string | "none";
 }
 
-// https://placecats.com/millie_neo/300/200
 const posts: Posts[] = [
 	{
 		id: 1,
@@ -45,13 +49,23 @@ const app = express();
 app.use(express.json());
 const port = 3000;
 
-app.get("/posts", (_request, reply) => {
+async function buscarTodosOsPosts() {
+	const db = dbDriver.db("imersao-instabyte");
+	const collection = db.collection("posts");
+
+	const posts = await collection.find().toArray();
+
+	return posts;
+}
+
+app.get("/posts", async (_request, reply) => {
+	const posts = await buscarTodosOsPosts();
 	reply.status(200).json({ posts });
 	return;
 });
 
-function buscarPost(id: number) {
-	return posts.filter((value) => value.id === id);
+async function buscarPost(id: number) {
+	dbDriver;
 }
 
 app.get("/posts/:id", (request, reply) => {
