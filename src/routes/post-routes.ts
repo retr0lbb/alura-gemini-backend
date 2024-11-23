@@ -4,6 +4,7 @@ import {
 	listarTodosOsPosts,
 	inserirNovoPost,
 	uploadImageToDb,
+	atualizarPost,
 } from "../controllers/posts-controller.js";
 
 const multerStorage = multer.diskStorage({
@@ -25,6 +26,7 @@ const routes = (app: Express) => {
 	app.get("/posts", listarTodosOsPosts);
 	app.post("/posts", inserirNovoPost);
 	app.post("/upload", upload.single("imagem"), uploadImageToDb);
+	app.put("/upload/:id", atualizarPost);
 };
 
 export default routes;

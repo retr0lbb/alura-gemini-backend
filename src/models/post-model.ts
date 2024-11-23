@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { connectToDb } from "../config/dbConection.js";
 import { env } from "../utils/env.js";
 import z from "zod";
@@ -21,4 +22,13 @@ export async function buscarTodosOsPosts() {
 export async function CreatePost(post: z.infer<typeof postSchema>) {
 	const createdPost = collection.insertOne(post);
 	return createdPost;
+}
+
+export async function atualizaPOst(
+	postId: string,
+	post: z.infer<typeof postSchema>,
+) {
+	const objectId = ObjectId.createFromHexString(postId);
+
+	return collection.updateOne({ _id: new ObjectId(objectId) }, { $set: post });
 }

@@ -5,6 +5,7 @@ import { env } from "./src/utils/env.js";
 import postRoutes from "./src/routes/post-routes.js";
 
 const app = express();
+app.use(express.static("uploads"));
 postRoutes(app);
 const port = 3000;
 
