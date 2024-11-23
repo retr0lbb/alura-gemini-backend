@@ -1,7 +1,12 @@
 import { MongoClient } from "mongodb";
 
+let mongoClient: MongoClient | null = null;
+
 export async function connectToDb(connectionString: string) {
-	let mongoClient: MongoClient;
+	if (mongoClient !== null) {
+		console.log("Alredy existing a open conection");
+		return mongoClient;
+	}
 
 	try {
 		mongoClient = new MongoClient(connectionString);

@@ -1,6 +1,6 @@
 import express from "express";
 import z from "zod";
-import { connectToDb } from "./src/db/dbConection.js";
+import { connectToDb } from "./src/config/dbConection.js";
 import { env } from "./src/utils/env.js";
 import postRoutes from "./src/routes/post-routes.js";
 
